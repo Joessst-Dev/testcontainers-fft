@@ -102,5 +102,5 @@ func (c *Container) MustBaseURL(ctx context.Context) string {
 
 // HostPort is the host port the emulator's 8080 is published on.
 func (c *Container) HostPort(ctx context.Context) (nat.Port, error) {
-	return c.Container.MappedPort(ctx, port)
+	return c.MappedPort(ctx, port)
 }

@@ -7,6 +7,10 @@ It gives an integration test a fresh, disposable fulfillmenttools API per run: a
 host port, automatic readiness, automatic teardown. No tenant, no credentials, no network
 to the real platform.
 
+> **Disclaimer:** This is an independent, community-maintained project and is **not** an
+> official fulfillmenttools product. It is not affiliated with, endorsed by, or supported
+> by fulfillmenttools GmbH. "fulfillmenttools" is a trademark of its respective owner.
+
 ```go
 import (
     "context"
