@@ -84,7 +84,7 @@ func do(t *testing.T, method, url string, body []byte) string {
 	req.Header.Set("Content-Type", "application/json")
 	res, err := http.DefaultClient.Do(req)
 	require.NoError(t, err)
-	defer res.Body.Close()
+	defer func() { _ = res.Body.Close() }()
 	b, err := io.ReadAll(res.Body)
 	require.NoError(t, err)
 	require.Lessf(t, res.StatusCode, 300, "%s %s -> %d: %s", method, url, res.StatusCode, b)
