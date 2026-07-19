@@ -42,9 +42,9 @@ func WithSeed(hostDir string) testcontainers.CustomizeRequestOption {
 	}
 }
 
-// WithSeedFS is [WithSeed] from an in-memory or embedded filesystem (e.g. a
-// go:embed tree), so fixtures ship inside the test binary instead of on disk.
-// Every regular file in fsys is copied under /fixtures preserving its path.
+// WithSeedFS is [WithSeed] from an in-memory or embedded filesystem (e.g. one
+// built with an embed directive), so fixtures ship inside the test binary instead
+// of on disk. Every regular file in fsys is copied under /fixtures preserving its path.
 func WithSeedFS(fsys fs.FS) testcontainers.CustomizeRequestOption {
 	return func(req *testcontainers.GenericContainerRequest) error {
 		seeded := false
