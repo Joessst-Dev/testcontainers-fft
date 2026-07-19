@@ -14,7 +14,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/docker/go-connections/nat"
+	"github.com/moby/moby/api/types/network"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
 )
@@ -27,7 +27,7 @@ const DefaultImage = "ghcr.io/joessst-dev/fft:0.3.0"
 
 // port is the container's fixed listen port. The host port is always mapped
 // dynamically, so this is only ever used inside the container and for the wait.
-const port = nat.Port("8080/tcp")
+const port = "8080/tcp"
 
 // Container is a running fft emulator.
 type Container struct {
@@ -46,7 +46,7 @@ type Container struct {
 func Run(ctx context.Context, img string, opts ...testcontainers.ContainerCustomizer) (*Container, error) {
 	req := testcontainers.ContainerRequest{
 		Image:        img,
-		ExposedPorts: []string{string(port)},
+		ExposedPorts: []string{port},
 		// --host 0.0.0.0 is mandatory: the emulator defaults to 127.0.0.1, which
 		// answers only inside the container, so the mapped port would be dead.
 		Cmd:        []string{"emulator", "--host", "0.0.0.0"},
@@ -101,6 +101,6 @@ func (c *Container) MustBaseURL(ctx context.Context) string {
 }
 
 // HostPort is the host port the emulator's 8080 is published on.
-func (c *Container) HostPort(ctx context.Context) (nat.Port, error) {
+func (c *Container) HostPort(ctx context.Context) (network.Port, error) {
 	return c.MappedPort(ctx, port)
 }
