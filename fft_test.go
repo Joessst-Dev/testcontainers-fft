@@ -50,7 +50,7 @@ func get(t *testing.T, url string) (string, int) {
 	t.Helper()
 	res, err := http.Get(url)
 	require.NoError(t, err)
-	defer res.Body.Close()
+	defer func() { _ = res.Body.Close() }()
 	b, err := io.ReadAll(res.Body)
 	require.NoError(t, err)
 	return string(b), res.StatusCode
